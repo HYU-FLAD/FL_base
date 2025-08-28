@@ -123,8 +123,7 @@ This framework provides implementations of the core concepts from the following 
 
 ### 2\. Defense: Robust Federated Aggregation (RFA)
 
-  * **Reference Paper**: Pillutla, K., Kakade, S. M., & Harchaoui, Z. (2022). "Robust Aggregation for Federated Learning." *IEEE Transactions on Signal Processing*.
-
+  * **Reference Paper**: K. Pillutla, S. M. Kakade and Z. Harchaoui, "Robust Aggregation for Federated Learning," in IEEE Transactions on Signal Processing, vol. 70, pp. 1142-1154, 2022, doi: 10.1109/TSP.2022.3153135.
   * **Theoretical Background**: The standard FedAvg algorithm, which relies on averaging model parameters, is highly susceptible to outlier updates submitted by malicious clients. RFA replaces the arithmetic mean with the **geometric median**, a classic concept from robust statistics. The geometric median of a set of points is defined as the point that minimizes the sum of Euclidean distances to all points in the set. This property makes it inherently robust to outliers, as a single malicious point cannot arbitrarily shift the aggregate.
 
   * **Framework Implementation (`defenses/robust_aggregation.py`)**: This module implements RFA as a custom Flower `Strategy`. It overrides the standard `aggregate_fit` method. Within this method, model updates from all participating clients are collected, vectorized, and fed into an iterative algorithm (Weiszfeld's algorithm) to compute their geometric median. The resulting aggregate, which is resistant to poisoning attacks, is then used to update the global model.
